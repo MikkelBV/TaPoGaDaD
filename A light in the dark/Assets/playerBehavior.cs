@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class playerBehavior : MonoBehaviour
 {
+    float clicked = 0;
+    float clicktime = 0;
+    float clickDelay = 0.8f;
 
     public GameObject light;
     private Vector3 mouseClickPos;
@@ -18,6 +21,23 @@ public class playerBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
     }
+
+    bool DoubleClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            clicked++;
+            if (clicked == 1) clicktime = Time.time;
+        }
+        if (clicked > 1 && Time.time - clicktime < clickDelay)
+        {
+            clicked = 0;
+            clicktime = 0;
+            return true;
+        }
+        else if (clicked > 2 || Time.time - clicktime > 1) clicked = 0;
+        return false;
+    }
     
     void GoToWaypoint(){
         agent.destination = mouseClickPos;
@@ -25,29 +45,28 @@ public class playerBehavior : MonoBehaviour
     }
 
 
-    void Update()
+    void Update() // check at clickdelay inden i bevægelsen
     {
-        if (Input.GetMouseButtonDown(0)){
-            RaycastHit hit;
+        if (Input.GetMouseButtonDown(0))
+        {
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)){
-                mouseClickPos = hit.point;
+            if (Time.time - clicktime > clickDelay)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+                {
+                    mouseClickPos = hit.point;
+                        GoToWaypoint();
+
+                }
             }
 
-            Instantiate(light, new Vector3(0+mouseClickPos.x, 0.20f, 0+mouseClickPos.z), Quaternion.identity);
-
-            Debug.Log(mouseClickPos);
-        }
-
-        if (Input.GetMouseButtonDown(1)){
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)){
-                mouseClickPos = hit.point;
-                GoToWaypoint();
-                //if (!agent.pathPending && agent.remainingDistance < 0.5f){
-                //}
+            if (DoubleClick())
+            {
+                Instantiate(light, new Vector3(0 + transform.position.x, 0.20f, 0 + transform.position.z), Quaternion.identity);
             }
-        }
+           
 
+        }
     }
 }

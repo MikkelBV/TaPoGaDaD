@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/50L brownale.unity
-  isLoaded: 1
-  isActive: 1

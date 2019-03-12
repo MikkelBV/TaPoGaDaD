@@ -9,8 +9,11 @@ public class playerBehavior : MonoBehaviour
     float clicktime = 0;
     float clickDelay = 0.8f;
 
-    public GameObject light;
-    private Vector3 mouseClickPos;
+    public GameObject dropLight1;
+    public GameObject dropLight2;
+    private int lightCount;
+    private Vector3 mouseClickPos; 
+    private float distL1, distL2;
 
     private Transform waypoint;
     private int waypointIndex;
@@ -18,6 +21,7 @@ public class playerBehavior : MonoBehaviour
     
     void Start()
     {
+        lightCount = 0;
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
     }
@@ -44,9 +48,36 @@ public class playerBehavior : MonoBehaviour
         //destPoint = (destPoint+1) % navPoints.Length;
     }
 
+    void CheckLight(){
+        GameObject Light1 = GameObject.Find("Drop Light 1(Clone)");
+        GameObject Light2 = GameObject.Find("Drop Light 2(Clone)");
+
+        if (lightCount < 2){
+            if (!Light1){
+                Instantiate(dropLight1, new Vector3(0 + transform.position.x, 0.20f, 0 + transform.position.z), transform.rotation);
+                lightCount++;
+            }
+            else if (!Light2){
+                Instantiate(dropLight2, new Vector3(0 + transform.position.x, 0.20f, 0 + transform.position.z), transform.rotation);
+                lightCount++;
+            }
+        }
+
+        if (Light1 && Vector3.Distance(Light1.transform.position, transform.position) < 0.3){
+            Destroy(Light1);
+            lightCount--;
+        }
+        if (Light2 && Vector3.Distance(Light2.transform.position, transform.position) < 0.3){
+            Destroy(Light2);
+            lightCount--;
+        }
+
+    }
 
     void Update() // check at clickdelay inden i bevægelsen
     {
+        
+        
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -57,16 +88,25 @@ public class playerBehavior : MonoBehaviour
                 {
                     mouseClickPos = hit.point;
                         GoToWaypoint();
-
                 }
             }
 
             if (DoubleClick())
             {
-                Instantiate(light, new Vector3(0 + transform.position.x, 0.20f, 0 + transform.position.z), Quaternion.identity);
-            }
-           
+                /*
+                lights.Add(
+                    Instantiate(dropLight, new Vector3(0 + transform.position.x, 0.20f, 0 + transform.position.z), transform.rotation) as GameObject
+                );            
 
+                Debug.Log(lights.Count);
+                */
+            }
         }
+        if (Input.GetMouseButtonDown(1)){
+                CheckLight();
+        }
+
+
+
     }
 }

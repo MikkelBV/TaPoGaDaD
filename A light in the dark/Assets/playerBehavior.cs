@@ -12,6 +12,7 @@ public class playerBehavior : MonoBehaviour {
     private Transform waypoint;
     private NavMeshAgent agent;
     private bool ignoreNextLightCollision = false;
+    
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
@@ -54,6 +55,7 @@ public class playerBehavior : MonoBehaviour {
         ignoreNextLightCollision = true;
     }
 
+
     void OnTriggerEnter(Collider other) {
         if (ignoreNextLightCollision) {
             ignoreNextLightCollision = false;
@@ -61,7 +63,7 @@ public class playerBehavior : MonoBehaviour {
         }
 
         if (other.gameObject == dropLight1)
-            dropLight1.SetActive(false);
+            dropLight1.SetActive(true);
         else if (other.gameObject == dropLight2)
             dropLight2.SetActive(false);
 

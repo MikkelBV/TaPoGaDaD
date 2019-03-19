@@ -12,7 +12,7 @@ public class playerBehavior : MonoBehaviour {
     private Transform waypoint;
     private NavMeshAgent agent;
     private bool ignoreNextLightCollision = false;
-    
+    private int health;
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
@@ -20,6 +20,8 @@ public class playerBehavior : MonoBehaviour {
 
         dropLight1.SetActive(false);
         dropLight2.SetActive(false);
+
+        health = 3;
     }
 
     void Update() {
@@ -57,6 +59,12 @@ public class playerBehavior : MonoBehaviour {
 
 
     void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Trap") {
+            Debug.Log("1 damage");
+            TakeDamage(1);
+            return;
+        }
+
         if (ignoreNextLightCollision) {
             ignoreNextLightCollision = false;
             return;
@@ -71,8 +79,18 @@ public class playerBehavior : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        Debug.Log("collision");
-        if (other.gameObject.tag == "Monster")
-            gameObject.SetActive(false);
+        if (other.gameObject.tag == "Monster") {
+            Debug.Log("3 damage");
+            TakeDamage(3);
+        }
+    }
+
+    void TakeDamage(int damage) {
+        health -= damage;
+
+        if (health <= 0) {
+            Debug.Log("bitch u ded");
+            enabled = false;
+        }
     }
 }

@@ -69,4 +69,10 @@ public class playerBehavior : MonoBehaviour {
 
         monster.LightsUpdated(dropLight1, dropLight2);
     }
+
+    void OnCollisionEnter(Collision other) {
+        Debug.Log("collision");
+        if (other.gameObject.tag == "Monster")
+            gameObject.SetActive(false);
+    }
 }

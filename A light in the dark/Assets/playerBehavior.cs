@@ -63,7 +63,7 @@ public class playerBehavior : MonoBehaviour {
         }
 
         if (other.gameObject == dropLight1)
-            dropLight1.SetActive(true);
+            dropLight1.SetActive(false);
         else if (other.gameObject == dropLight2)
             dropLight2.SetActive(false);
 

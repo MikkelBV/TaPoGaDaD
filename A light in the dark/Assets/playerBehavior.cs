@@ -26,6 +26,7 @@ public class playerBehavior : MonoBehaviour {
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
+
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
                 mouseClickPos = hit.point;
@@ -34,6 +35,15 @@ public class playerBehavior : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(1)) {
             CheckLight();
+            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            Vector2 direction = (Vector2)((worldMousePos - transform.position));
+            float lightVelocity = direction.magnitude / 20;
+
+            dropLight2.GetComponent<Rigidbody>().velocity = new Vector3(direction.x * lightVelocity, 0, direction.y * lightVelocity);
+            direction.Normalize();
+            ActivateLight(dropLight2);
+     
         }
     }
 

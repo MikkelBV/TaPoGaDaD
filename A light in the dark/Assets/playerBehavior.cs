@@ -37,10 +37,11 @@ public class playerBehavior : MonoBehaviour {
             CheckLight();
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            Vector2 direction = (Vector2)((worldMousePos - transform.position));
-            float lightVelocity = direction.magnitude / 20;
+            Vector3 direction = worldMousePos - transform.position;
+            direction.y = 0.0f;
+            float lightVelocity = direction.magnitude;
 
-            dropLight2.GetComponent<Rigidbody>().velocity = new Vector3(direction.x * lightVelocity, 0, direction.y * lightVelocity);
+            dropLight2.GetComponent<Rigidbody>().velocity = direction * lightVelocity; 
             direction.Normalize();
             ActivateLight(dropLight2);
      

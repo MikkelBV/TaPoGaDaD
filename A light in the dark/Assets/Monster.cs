@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour {
     public GameObject light1;
     public GameObject light2;
 
+    private Light light;
+
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
@@ -29,16 +31,19 @@ public class Monster : MonoBehaviour {
 
     }
 
-    void OnTriggerEnter(GameObject other){
-        private Light light1 = GetComponent<Light>();
+    //set light attributes on monster collision
+    void OnTriggerEnter(Collider other){
+        
         if (other.tag == "Light1"){
-            light1.color = Color.red;
+            light = other.GetComponent<Light>();
+            light.color = Color.red;
+            light.range = 2;
+            light.intensity = 1;
         }
-        else if (other.tag == "Light2"){
-            light2.color = Color.red;
+        if (other.tag == "Light2"){
+            //collision currently doesnt work with light2 
         }
     }
-
 
     GameObject GetClosestLight(GameObject light1, GameObject light2) {
         var distLight1 = Vector3.Distance(transform.position, light1.transform.position);
@@ -50,4 +55,5 @@ public class Monster : MonoBehaviour {
     void GoToWaypoint(Vector3 waypoint) {
         agent.destination = waypoint;
     }
+
 }

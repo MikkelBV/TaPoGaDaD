@@ -44,16 +44,26 @@ public class playerBehavior : MonoBehaviour {
             rigb.AddForce(pSpeed, 0, 0, ForceMode.VelocityChange);
         }
     
-        /*
+       
         if (Input.GetMouseButtonDown(0)) {
 
+
+            /*** Click to move ***/
+            /*
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
                 mouseClickPos = hit.point;
                 GoToWaypoint();
             }
+            */
+            
+            //TODO
+            //Limit so light cannot be placed if already placed
+            CheckLight();
+            ActivateLight(dropLight1);
+
+
         }
-        */
         if (Input.GetMouseButtonDown(1)) {
             CheckLight();
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -74,11 +84,13 @@ public class playerBehavior : MonoBehaviour {
     }
 
     void CheckLight() {
+
         if (!dropLight1.activeSelf) {
             ActivateLight(dropLight1);
         } else if (!dropLight2.activeSelf) {
             ActivateLight(dropLight2);
         }
+        
 
         monster.LightsUpdated(dropLight1, dropLight2);
     }
@@ -87,6 +99,12 @@ public class playerBehavior : MonoBehaviour {
         light.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         light.SetActive(true);
         ignoreNextLightCollision = true;
+        
+        //set light attributes on placement
+        light.GetComponent<Light>().color = Color.white;
+        light.GetComponent<Light>().range = 30;
+        light.GetComponent<Light>().intensity = 5;
+
     }
 
 

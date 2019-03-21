@@ -970,7 +970,8 @@ MonoBehaviour:
   dropLight1: {fileID: 1468303539}
   dropLight2: {fileID: 321126378}
   monster: {fileID: 2138856881}
-  pSpeed: 1
+  pSpeed: 0.5
+  lightSpawnable: 0
 --- !u!136 &314331057
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1131,6 +1132,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1696770218}
+  - {fileID: 532762646}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90.468994, y: 0, z: 0}
@@ -1141,11 +1143,11 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321126378}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ef28101094333454e8d9a66a29049dc0, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &321126382
 Rigidbody:
@@ -1157,7 +1159,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1750,7 +1752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477194369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.973, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1123798635}
@@ -1939,6 +1941,50 @@ Transform:
   m_Father: {fileID: 1123798635}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: -90}
+--- !u!1 &532762645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532762646}
+  - component: {fileID: 532762647}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &532762646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532762645}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 321126380}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &532762647
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532762645}
+  m_Material: {fileID: 13400000, guid: ef28101094333454e8d9a66a29049dc0, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &595771694
 GameObject:
   m_ObjectHideFlags: 0
@@ -8809,7 +8855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030459605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.007, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1123798635}
@@ -9272,8 +9318,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123798634}
   m_LocalRotation: {x: 0.7071068, y: 0, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.5, z: 0.15}
+  m_LocalPosition: {x: -0.0000038147, y: 0, z: -0.0000038147}
+  m_LocalScale: {x: 2, y: 1.1055, z: 0.15}
   m_Children:
   - {fileID: 477194373}
   - {fileID: 1664069445}
@@ -10616,7 +10662,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1468303543
 Rigidbody:
@@ -10628,7 +10674,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -13074,8 +13120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a797d9e0e396334ebcba1bcee882beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light1: {fileID: 0}
-  light2: {fileID: 0}
+  light1: {fileID: 1468303539}
+  light2: {fileID: 321126378}
+  player: {fileID: 314331056}
 --- !u!136 &2138856882
 CapsuleCollider:
   m_ObjectHideFlags: 0

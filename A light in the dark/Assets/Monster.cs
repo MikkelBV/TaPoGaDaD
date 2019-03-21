@@ -10,7 +10,7 @@ public class Monster : MonoBehaviour {
     public GameObject light1;
     public GameObject light2;
 
-    private Light light;
+    public playerBehavior player;
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
@@ -35,13 +35,18 @@ public class Monster : MonoBehaviour {
     void OnTriggerEnter(Collider other){
         
         if (other.tag == "Light1"){
-            light = other.GetComponent<Light>();
-            light.color = Color.red;
-            light.range = 2;
-            light.intensity = 1;
+            //light1 = other.GetComponent<Light>();
+            other.GetComponent<Light>().color = Color.red;
+            other.GetComponent<Light>().range = 2f;
+            other.GetComponent<Light>().intensity = 1f;
+            player.lightSpawnable = false;
         }
         if (other.tag == "Light2"){
-            //collision currently doesnt work with light2 
+            //light2 = other.GetComponent<Light>();
+            other.GetComponent<Light>().color = Color.red;
+            other.GetComponent<Light>().range = 2;
+            other.GetComponent<Light>().intensity = 1;
+            player.lightSpawnable = false;
         }
     }
 

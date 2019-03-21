@@ -7,6 +7,7 @@ public class playerBehavior : MonoBehaviour {
     public GameObject dropLight1;
     public GameObject dropLight2;
     public Monster monster;
+    
 
     private Vector3 mouseClickPos;
     private Transform waypoint;
@@ -17,16 +18,21 @@ public class playerBehavior : MonoBehaviour {
     private Rigidbody rigb; 
     public float pSpeed = 1f;
 
+    [HideInInspector]
+    public bool lightSpawnable;
+
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
 
         dropLight1.SetActive(false);
         dropLight2.SetActive(false);
+        lightSpawnable = true;
 
         health = 3;
 
         rigb = GetComponent<Rigidbody>();
+
     }
 
     void Update() {
@@ -59,9 +65,11 @@ public class playerBehavior : MonoBehaviour {
             
             //TODO
             //Limit so light cannot be placed if already placed
+            if (lightSpawnable){
             CheckLight();
             ActivateLight(dropLight1);
-
+            lightSpawnable = false;
+            }
 
         }
         if (Input.GetMouseButtonDown(1)) {
@@ -102,8 +110,8 @@ public class playerBehavior : MonoBehaviour {
         
         //set light attributes on placement
         light.GetComponent<Light>().color = Color.white;
-        light.GetComponent<Light>().range = 30;
-        light.GetComponent<Light>().intensity = 5;
+        light.GetComponent<Light>().range = 150f;
+        light.GetComponent<Light>().intensity = 1.75f;
 
     }
 
@@ -120,9 +128,10 @@ public class playerBehavior : MonoBehaviour {
             return;
         }
 
-        if (other.gameObject == dropLight1)
+        if (other.gameObject.tag == "Light1"){
             dropLight1.SetActive(false);
-        else if (other.gameObject == dropLight2)
+            lightSpawnable = true;
+        }else if (other.gameObject.tag == "Light2")
             dropLight2.SetActive(false);
 
         monster.LightsUpdated(dropLight1, dropLight2);

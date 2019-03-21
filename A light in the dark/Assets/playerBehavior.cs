@@ -14,6 +14,9 @@ public class playerBehavior : MonoBehaviour {
     private bool ignoreNextLightCollision = false;
     private int health;
 
+    private Rigidbody rigb; 
+    public float pSpeed = 1f;
+
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
@@ -22,9 +25,26 @@ public class playerBehavior : MonoBehaviour {
         dropLight2.SetActive(false);
 
         health = 3;
+
+        rigb = GetComponent<Rigidbody>();
     }
 
     void Update() {
+
+        if (Input.GetKey(KeyCode.W)){
+            rigb.AddForce(0, 0, pSpeed, ForceMode.VelocityChange);
+        }
+        if (Input.GetKey(KeyCode.A)){
+            rigb.AddForce(-pSpeed, 0, 0, ForceMode.VelocityChange);
+        }
+        if (Input.GetKey(KeyCode.S)){
+            rigb.AddForce(0, 0, -pSpeed, ForceMode.VelocityChange);
+        }
+        if (Input.GetKey(KeyCode.D)){
+            rigb.AddForce(pSpeed, 0, 0, ForceMode.VelocityChange);
+        }
+    
+        /*
         if (Input.GetMouseButtonDown(0)) {
 
             RaycastHit hit;
@@ -33,6 +53,7 @@ public class playerBehavior : MonoBehaviour {
                 GoToWaypoint();
             }
         }
+        */
         if (Input.GetMouseButtonDown(1)) {
             CheckLight();
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

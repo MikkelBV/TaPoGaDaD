@@ -7,6 +7,9 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour {
     private NavMeshAgent agent;
 
+    public GameObject light1;
+    public GameObject light2;
+
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
@@ -23,7 +26,19 @@ public class Monster : MonoBehaviour {
             var closest = GetClosestLight(light1, light2);
             agent.SetDestination(closest.transform.position);
         }
+
     }
+
+    void OnTriggerEnter(GameObject other){
+        private Light light1 = GetComponent<Light>();
+        if (other.tag == "Light1"){
+            light1.color = Color.red;
+        }
+        else if (other.tag == "Light2"){
+            light2.color = Color.red;
+        }
+    }
+
 
     GameObject GetClosestLight(GameObject light1, GameObject light2) {
         var distLight1 = Vector3.Distance(transform.position, light1.transform.position);

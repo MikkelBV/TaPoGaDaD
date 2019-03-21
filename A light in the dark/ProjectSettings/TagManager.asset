@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Monster
   - Trap
+  - Light2
+  - Light1
   layers:
   - Default
   - TransparentFX

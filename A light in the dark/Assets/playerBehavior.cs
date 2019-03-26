@@ -107,27 +107,24 @@ public class playerBehavior : MonoBehaviour {
 
         monster.LightsUpdated(dropLight1, dropLight2);
     }
+    float checkMouseDist(){
+        return Mathf.Abs(transform.position.x-worldMousePos.x);
+    }
 
     void ActivateLight(GameObject light) {
-        if (worldMousePos.x > transform.position.x){
+        if (worldMousePos.x > transform.position.x && checkMouseDist() >= 1){
             modifierZ = 0f;
             modifierX = 0.5f;
-        }
-        else if (worldMousePos.x < transform.position.x){
+        }else if (worldMousePos.x < transform.position.x && checkMouseDist() >= 1){
             modifierZ = 0f;
             modifierX = -0.5f;
-        }
-        /* DOES NOT FUCKING WORK
-        else if (Mathf.Abs((transform.position.x-worldMousePos.x)) < 1 && worldMousePos.z > transform.position.z){
+        }else if (worldMousePos.z > transform.position.z && checkMouseDist() < 1){
             modifierZ = 0.5f;
             modifierX = 0f;
-        }
-        else if (Mathf.Abs((transform.position.x-worldMousePos.x)) < 1 && worldMousePos.z < transform.position.z){
+        }else if (worldMousePos.z < transform.position.z && checkMouseDist() < 1){
             modifierZ = -0.5f;
             modifierX = 0f;
         }
-        */
-        Debug.Log(transform.position.x-worldMousePos.x);
 
         light.transform.position = new Vector3(transform.position.x+modifierX, 0, transform.position.z+modifierZ);
         light.SetActive(true);

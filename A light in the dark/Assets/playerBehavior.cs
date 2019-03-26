@@ -78,9 +78,11 @@ public class playerBehavior : MonoBehaviour {
 
             Vector3 direction = worldMousePos - transform.position;
             direction.y = 0.0f;
-            float lightVelocity = direction.magnitude;
+            direction.Normalize();
+            //float lightVelocity = direction.magnitude;
+            const float lightVelocity = 10f;
 
-            dropLight2.GetComponent<Rigidbody>().velocity = direction * lightVelocity; 
+            dropLight2.GetComponent<Rigidbody>().velocity = lightVelocity * direction;
             direction.Normalize();
             ActivateLight(dropLight2);
      

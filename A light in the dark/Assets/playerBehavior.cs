@@ -18,6 +18,10 @@ public class playerBehavior : MonoBehaviour {
     private Rigidbody rigb; 
     public float pSpeed = 1f;
 
+    private Vector3 worldMousePos;
+    private float modifierZ;
+    private float modifierX;
+
     [HideInInspector]
     public bool lightSpawnable;
 
@@ -72,10 +76,10 @@ public class playerBehavior : MonoBehaviour {
             }
 
         }
+        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonDown(1)) {
             CheckLight();
-            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            
             Vector3 direction = worldMousePos - transform.position;
             direction.y = 0.0f;
             direction.Normalize();
@@ -85,7 +89,6 @@ public class playerBehavior : MonoBehaviour {
             dropLight2.GetComponent<Rigidbody>().velocity = lightVelocity * direction;
             direction.Normalize();
             ActivateLight(dropLight2);
-     
         }
     }
 
@@ -106,7 +109,27 @@ public class playerBehavior : MonoBehaviour {
     }
 
     void ActivateLight(GameObject light) {
-        light.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        if (worldMousePos.x > transform.position.x){
+            modifierZ = 0f;
+            modifierX = 0.5f;
+        }
+        else if (worldMousePos.x < transform.position.x){
+            modifierZ = 0f;
+            modifierX = -0.5f;
+        }
+        /* DOES NOT FUCKING WORK
+        else if (Mathf.Abs((transform.position.x-worldMousePos.x)) < 1 && worldMousePos.z > transform.position.z){
+            modifierZ = 0.5f;
+            modifierX = 0f;
+        }
+        else if (Mathf.Abs((transform.position.x-worldMousePos.x)) < 1 && worldMousePos.z < transform.position.z){
+            modifierZ = -0.5f;
+            modifierX = 0f;
+        }
+        */
+        Debug.Log(transform.position.x-worldMousePos.x);
+
+        light.transform.position = new Vector3(transform.position.x+modifierX, 0, transform.position.z+modifierZ);
         light.SetActive(true);
         ignoreNextLightCollision = true;
         

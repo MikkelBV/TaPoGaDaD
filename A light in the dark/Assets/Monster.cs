@@ -12,9 +12,12 @@ public class Monster : MonoBehaviour {
 
     public playerBehavior player;
 
+    private int health;
+
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = true;
+        health = 3;
     }
 
     public void LightsUpdated(GameObject light1, GameObject light2) {
@@ -28,6 +31,7 @@ public class Monster : MonoBehaviour {
             var closest = GetClosestLight(light1, light2);
             agent.SetDestination(closest.transform.position);
         }
+        
 
     }
 
@@ -41,13 +45,19 @@ public class Monster : MonoBehaviour {
             other.GetComponent<Light>().intensity = 1f;
             player.lightSpawnable = false;
         }
-        if (other.tag == "Light2"){
+        if (other.tag == "Light2" && !player.isPredator){
             //light2 = other.GetComponent<Light>();
             other.GetComponent<Light>().color = Color.red;
             other.GetComponent<Light>().range = 2;
             other.GetComponent<Light>().intensity = 1;
             player.lightSpawnable = false;
         }
+        if (other.tag == "Light2" && player.isPredator){
+            health--;
+            Debug.Log(health);
+            other.gameObject.SetActive(false);
+        }
+
     }
 
     GameObject GetClosestLight(GameObject light1, GameObject light2) {

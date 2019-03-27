@@ -8,6 +8,7 @@ TagManager:
   - Trap
   - Light2
   - Light1
+  - Weapon
   layers:
   - Default
   - TransparentFX

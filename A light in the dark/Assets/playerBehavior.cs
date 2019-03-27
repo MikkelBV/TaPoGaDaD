@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class playerBehavior : MonoBehaviour {
     public GameObject dropLight1;
     public GameObject dropLight2;
+    public GameObject weapon;
     public Monster monster;
     
 
@@ -22,8 +23,8 @@ public class playerBehavior : MonoBehaviour {
     private float modifierZ;
     private float modifierX;
 
-    [HideInInspector]
-    public bool lightSpawnable;
+    [HideInInspector] public bool isPredator;
+    [HideInInspector] public bool lightSpawnable;
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
@@ -41,23 +42,21 @@ public class playerBehavior : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetKey(KeyCode.W)){
+        //WASD Movement
+        if (Input.GetKey(KeyCode.W))
             rigb.AddForce(0, 0, pSpeed, ForceMode.VelocityChange);
-        }
-        if (Input.GetKey(KeyCode.A)){
+        if (Input.GetKey(KeyCode.A))
             rigb.AddForce(-pSpeed, 0, 0, ForceMode.VelocityChange);
-        }
-        if (Input.GetKey(KeyCode.S)){
+        if (Input.GetKey(KeyCode.S))
             rigb.AddForce(0, 0, -pSpeed, ForceMode.VelocityChange);
-        }
-        if (Input.GetKey(KeyCode.D)){
+        if (Input.GetKey(KeyCode.D))
             rigb.AddForce(pSpeed, 0, 0, ForceMode.VelocityChange);
-        }
     
-       
-        if (Input.GetMouseButtonDown(0)) {
+        //Left mouse button
 
-
+            /* 
+            /*Soon to be obsolete (change to single-light firing only)
+            ___________________________________________________________*/
             /*** Click to move ***/
             /*
             RaycastHit hit;
@@ -65,7 +64,7 @@ public class playerBehavior : MonoBehaviour {
                 mouseClickPos = hit.point;
                 GoToWaypoint();
             }
-            */
+            
             
             //TODO
             //Limit so light cannot be placed if already placed
@@ -74,8 +73,8 @@ public class playerBehavior : MonoBehaviour {
             ActivateLight(dropLight1);
             lightSpawnable = false;
             }
-
-        }
+            */
+            
         worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonDown(1)) {
             CheckLight();
@@ -90,6 +89,10 @@ public class playerBehavior : MonoBehaviour {
             direction.Normalize();
             ActivateLight(dropLight2);
         }
+
+        if (isPredator){
+            dropLight2.GetComponent<Light>().color = new Color(Random.value, Random.value, Random.value);
+        }
     }
 
     void GoToWaypoint() {
@@ -97,14 +100,12 @@ public class playerBehavior : MonoBehaviour {
     }
 
     void CheckLight() {
-
         if (!dropLight1.activeSelf) {
             ActivateLight(dropLight1);
         } else if (!dropLight2.activeSelf) {
             ActivateLight(dropLight2);
         }
         
-
         monster.LightsUpdated(dropLight1, dropLight2);
     }
     float checkMouseDist(){
@@ -130,10 +131,17 @@ public class playerBehavior : MonoBehaviour {
         light.SetActive(true);
         ignoreNextLightCollision = true;
         
-        //set light attributes on placement
-        light.GetComponent<Light>().color = Color.white;
-        light.GetComponent<Light>().range = 150f;
-        light.GetComponent<Light>().intensity = 1.75f;
+        //set light attributes on activation
+        if(!isPredator){
+            light.GetComponent<Light>().color = Color.white;
+            light.GetComponent<Light>().range = 150f;
+            light.GetComponent<Light>().intensity = 1.75f;
+        }
+        else{
+            light.GetComponent<Light>().color = Color.green;
+            light.GetComponent<Light>().range = 100;
+            light.GetComponent<Light>().intensity = 3f;
+        }
 
     }
 
@@ -156,7 +164,14 @@ public class playerBehavior : MonoBehaviour {
         }else if (other.gameObject.tag == "Light2")
             dropLight2.SetActive(false);
 
+        if (other.gameObject.tag == "Weapon"){
+            isPredator = true;
+            weapon.SetActive(false);
+        }
+
         monster.LightsUpdated(dropLight1, dropLight2);
+
+
     }
 
     void OnCollisionEnter(Collision other) {

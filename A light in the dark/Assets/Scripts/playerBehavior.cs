@@ -9,8 +9,6 @@ public class playerBehavior : MonoBehaviour {
     public GameObject weapon;
     public Monster monster;
     
-
-    private Vector3 mouseClickPos;
     private Transform waypoint;
     private NavMeshAgent agent;
     private bool ignoreNextLightCollision = false;
@@ -95,10 +93,11 @@ public class playerBehavior : MonoBehaviour {
         }
     }
 
+/*
     void GoToWaypoint() {
         agent.destination = mouseClickPos;
     }
-
+*/
     void CheckLight() {
         if (!dropLight1.activeSelf) {
             ActivateLight(dropLight1);

@@ -19,10 +19,11 @@ public class healthBar : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            health--;
-            print("Health: " + health);
+            if(health > 0)
+            {
+                health--;
+                healthText.text = "Health : " + health;
+            }
         }
-
-
     }
 }

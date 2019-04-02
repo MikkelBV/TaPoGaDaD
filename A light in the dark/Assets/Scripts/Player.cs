@@ -62,12 +62,9 @@ public class Player : MonoBehaviour {
 
         if (isLightCollected == true){
             monster.agent.speed = 0.7f;
-        }
-        else {
+        } else {
             monster.agent.speed = 1.5f;
         }
-
-
     }
 
     float getMouseDist(Vector3 position){

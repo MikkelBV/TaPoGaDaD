@@ -8213,7 +8213,6 @@ GameObject:
   - component: {fileID: 2104923318}
   - component: {fileID: 2104923321}
   - component: {fileID: 2104923320}
-  - component: {fileID: 2104923319}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -8240,28 +8239,6 @@ RectTransform:
   m_AnchoredPosition: {x: 22, y: 28}
   m_SizeDelta: {x: 738, y: 291.4}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &2104923319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104923317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2a530d728f062469963d42d0f909fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightObject: {fileID: 0}
-  weapon: {fileID: 0}
-  monster: {fileID: 0}
-  Screen: {fileID: 0}
-  healthText: {fileID: 0}
-  lightVelocity: 10
-  pSpeed: 1
-  lightSpawnOffset: 1
-  isPredator: 0
-  isLightCollected: 0
 --- !u!114 &2104923320
 MonoBehaviour:
   m_ObjectHideFlags: 0

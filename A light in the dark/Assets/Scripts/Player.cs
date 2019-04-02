@@ -87,27 +87,19 @@ public class Player : MonoBehaviour {
         }
     }
 
-
     void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Trap") {
-            Debug.Log("1 damage");
-            TakeDamage(1);
-            return;
-        }
-
         if (other.gameObject.tag == "Weapon"){
             isPredator = true;
-            weapon.SetActive(false);
-        }
-    }
-
-    void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Monster") {
+            weapon.SetActive(false);}
+        else if (other.gameObject.tag == "Monster") {
             Debug.Log("3 damage");
-            TakeDamage(3);
-        } else if (other.gameObject.tag == "Light1"){
+            TakeDamage(3);}
+        else if (other.gameObject.tag == "Light1"){
             lightObject.SetActive(false);
-            isLightCollected = true;
+            isLightCollected = true;}
+        else if(other.gameObject.tag == "Trap"){
+            Debug.Log("1 damage");
+            TakeDamage(1);
         }
     }
 

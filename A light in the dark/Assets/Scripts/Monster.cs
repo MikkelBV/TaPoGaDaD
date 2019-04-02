@@ -24,7 +24,7 @@ public class Monster : MonoBehaviour {
     }
 
     //set light attributes on monster collision
-    void OnCollisionEnter(Collision other) {
+    void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Light1" && !player.isPredator){
             //light2 = other.GetComponent<Light>();
             other.gameObject.gameObject.GetComponent<Light>().color = Color.red;

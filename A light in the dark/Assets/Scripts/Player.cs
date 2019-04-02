@@ -122,6 +122,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void ResetLight() {
+        lightObject.SetActive(false);
+        isLightCollected = true;
+    }
+
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Weapon"){
             isPredator = true;
@@ -129,8 +134,7 @@ public class Player : MonoBehaviour {
         } else if (other.gameObject.tag == "Monster") {
             TakeDamage(3);
         } else if (other.gameObject.tag == "Light1") {
-            lightObject.SetActive(false);
-            isLightCollected = true;
+            ResetLight();
         } else if(other.gameObject.tag == "Trap"){
             TakeDamage(1);
         } else if (other.gameObject.tag == "PowerUp") {

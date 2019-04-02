@@ -16,7 +16,6 @@ public class Player : MonoBehaviour {
     [HideInInspector] public bool isLightCollected;
 
     private Transform waypoint;
-    private NavMeshAgent agent;
     private int health;
 
     private Rigidbody rigb;
@@ -26,8 +25,6 @@ public class Player : MonoBehaviour {
 
     void Start() {
         rigb = GetComponent<Rigidbody>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.autoBraking = true;
 
         lightObject.SetActive(false);
         isLightCollected = true;
@@ -55,6 +52,13 @@ public class Player : MonoBehaviour {
 
         if (isPredator){
             lightObject.GetComponent<Light>().color = new Color(Random.value, Random.value, Random.value);
+        }
+
+        if (isLightCollected == true){
+            monster.agent.speed = 0.7f;  
+        } 
+        else {
+            monster.agent.speed = 1.5f;
         }
     }
 

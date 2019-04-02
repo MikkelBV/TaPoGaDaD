@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 public class Monster : MonoBehaviour {
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     public Player player;
     private int health;
 

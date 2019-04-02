@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     public static GameObject PLAYER, LIGHT;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour {
     public GameObject weapon;
     public Monster monster;
     public GameObject Screen;
+    public Text healthText;
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
     public float lightSpawnOffset = 1f;
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour {
         lightObject.SetActive(false);
         isLightCollected = true;
         health = 3;
+        healthText.text = "Health : " + health;
 
         PLAYER = gameObject;
         LIGHT = lightObject;
@@ -63,6 +66,8 @@ public class Player : MonoBehaviour {
         else {
             monster.agent.speed = 1.5f;
         }
+
+
     }
 
     float getMouseDist(Vector3 position){
@@ -110,6 +115,7 @@ public class Player : MonoBehaviour {
 
     void TakeDamage(int damage) {
         health -= damage;
+        healthText.text = "Health : " + health;
 
         if (health <= 0) {
             enabled = false;

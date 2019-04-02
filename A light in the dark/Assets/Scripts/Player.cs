@@ -61,8 +61,8 @@ public class Player : MonoBehaviour {
         }
 
         if (isLightCollected == true){
-            monster.agent.speed = 0.7f;  
-        } 
+            monster.agent.speed = 0.7f;
+        }
         else {
             monster.agent.speed = 1.5f;
         }
@@ -99,17 +99,45 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void PowerUpSpotlight() {
+        Debug.Log("Jeppi");
+    }
+
+    void PowerUpInvisibility() {
+        Debug.Log("Ismail");
+    }
+
+    void PowerUpExtraLight() {
+        Debug.Log("Somin");
+    }
+
+    void OnPowerUp(PowerUpType type) {
+        switch(type) {
+            case PowerUpType.Spotlight:
+                PowerUpSpotlight();
+                break;
+            case PowerUpType.Invisibility:
+                PowerUpInvisibility();
+                break;
+            case PowerUpType.ExtraLight:
+                PowerUpExtraLight();
+                break;
+        }
+    }
+
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Weapon"){
             isPredator = true;
-            weapon.SetActive(false);}
-        else if (other.gameObject.tag == "Monster") {
-            TakeDamage(3);}
-        else if (other.gameObject.tag == "Light1"){
+            weapon.SetActive(false);
+        } else if (other.gameObject.tag == "Monster") {
+            TakeDamage(3);
+        } else if (other.gameObject.tag == "Light1") {
             lightObject.SetActive(false);
-            isLightCollected = true;}
-        else if(other.gameObject.tag == "Trap"){
+            isLightCollected = true;
+        } else if(other.gameObject.tag == "Trap"){
             TakeDamage(1);
+        } else if (other.gameObject.tag == "PowerUp") {
+            OnPowerUp(other.gameObject.GetComponent<PowerUp>().type);
         }
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Light2
   - Light1
   - Weapon
+  - PowerUp
   layers:
   - Default
   - TransparentFX

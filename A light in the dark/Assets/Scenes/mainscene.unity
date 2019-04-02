@@ -1176,6 +1176,7 @@ MonoBehaviour:
   lightObject: {fileID: 1468303539}
   weapon: {fileID: 1407801722}
   monster: {fileID: 2138856881}
+  Screen: {fileID: 285983274}
   lightVelocity: 10
   pSpeed: 0.5
   lightSpawnOffset: 1
@@ -8215,6 +8216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a797d9e0e396334ebcba1bcee882beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   player: {fileID: 314331056}
 --- !u!136 &2138856882
 CapsuleCollider:

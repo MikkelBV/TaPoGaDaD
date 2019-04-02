@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public GameObject lightObject;
     public GameObject weapon;
     public Monster monster;
+    public GameObject Screen;
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
     public float lightSpawnOffset = 1f;
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour {
 
         PLAYER = gameObject;
         LIGHT = lightObject;
+
+        Screen.SetActive(false);
     }
 
     void Update() {
@@ -96,13 +99,11 @@ public class Player : MonoBehaviour {
             isPredator = true;
             weapon.SetActive(false);}
         else if (other.gameObject.tag == "Monster") {
-            Debug.Log("3 damage");
             TakeDamage(3);}
         else if (other.gameObject.tag == "Light1"){
             lightObject.SetActive(false);
             isLightCollected = true;}
         else if(other.gameObject.tag == "Trap"){
-            Debug.Log("1 damage");
             TakeDamage(1);
         }
     }
@@ -112,8 +113,7 @@ public class Player : MonoBehaviour {
 
         if (health <= 0) {
             enabled = false;
-            Debug.Log("bitch u ded");
-            Debug.Break();
+            Screen.SetActive(true);
         }
     }
 }

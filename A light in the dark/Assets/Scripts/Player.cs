@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 
     [HideInInspector] public bool isPredator;
     [HideInInspector] public bool isLightCollected;
+    [HideInInspector] public bool isInvisible;
 
     private Transform waypoint;
     private int health;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour {
     private Rigidbody rigb;
     private float modifierZ;
     private float modifierX;
+
+    private float timer;
 
 
     void Start() {
@@ -33,6 +36,8 @@ public class Player : MonoBehaviour {
         isLightCollected = true;
         health = 3;
         healthText.text = "Health : " + health;
+        isInvisible = false;
+
 
         PLAYER = gameObject;
         LIGHT = lightObject;
@@ -64,6 +69,12 @@ public class Player : MonoBehaviour {
             monster.agent.speed = 0.7f;
         } else {
             monster.agent.speed = 1.5f;
+        }
+
+        if (isInvisible){
+            timer -= Time.deltaTime;
+            Debug.Log(timer);
+            if (timer < 0) isInvisible = false;
         }
     }
 
@@ -101,6 +112,8 @@ public class Player : MonoBehaviour {
     }
 
     void PowerUpInvisibility() {
+        isInvisible = true;
+        timer = 10.0f;
         Debug.Log("Ismail");
     }
 

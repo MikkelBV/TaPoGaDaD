@@ -16,9 +16,9 @@ public class Monster : MonoBehaviour {
     }
 
     void Update() {
-        if (Player.LIGHT.activeSelf && !player.isPredator) {
+        if (Player.LIGHT.activeSelf && !player.isPredator ) {
             agent.SetDestination(Player.LIGHT.transform.position);
-        } else {
+        } else if (!player.isInvisible) {
             agent.SetDestination(Player.PLAYER.transform.position);
         }
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1183,6 +1183,7 @@ MonoBehaviour:
   lightSpawnOffset: 1
   isPredator: 0
   isLightCollected: 0
+  isInvisible: 0
 --- !u!136 &314331057
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1256,7 +1257,7 @@ Transform:
   - {fileID: 625786082}
   - {fileID: 366445692}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &314331061
 Rigidbody:
@@ -3566,7 +3567,7 @@ PrefabInstance:
     - target: {fileID: 3662945568980228335, guid: d5eaa760f7b93484d81f9c22eba37755,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3662945568980228335, guid: d5eaa760f7b93484d81f9c22eba37755,
         type: 3}
@@ -4184,7 +4185,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1030459605
 GameObject:
@@ -4735,7 +4736,7 @@ Transform:
   - {fileID: 1332720257}
   - {fileID: 791469900}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: -180}
 --- !u!1 &1157061924
 GameObject:
@@ -5151,7 +5152,7 @@ PrefabInstance:
     - target: {fileID: 3662945568980228335, guid: d5eaa760f7b93484d81f9c22eba37755,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3662945568980228335, guid: d5eaa760f7b93484d81f9c22eba37755,
         type: 3}
@@ -5786,7 +5787,7 @@ Transform:
   m_LocalScale: {x: 0.23745, y: 0.23745, z: 0.23745}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 33.33, y: 84.689, z: 44.74}
 --- !u!1 &1442731608
 GameObject:
@@ -6019,7 +6020,7 @@ Transform:
   - {fileID: 598953200}
   - {fileID: 185273922}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -90.468994, y: 0, z: 0}
 --- !u!135 &1468303542
 SphereCollider:
@@ -6465,7 +6466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 37.249, y: -30.000002, z: 0}
 --- !u!1 &1527166658
 GameObject:
@@ -6594,7 +6595,7 @@ Transform:
   - {fileID: 2091747932}
   - {fileID: 1814474}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1589235462
 GameObject:
@@ -8411,7 +8412,7 @@ Transform:
   m_Children:
   - {fileID: 1259397524}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2138856886
 Rigidbody:

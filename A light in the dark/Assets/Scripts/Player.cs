@@ -15,6 +15,10 @@ public class Player : MonoBehaviour {
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
     public float lightSpawnOffset = 1f;
+    public float lookSpeed = 5f; 
+
+    public Vector3 worldMousePos;
+    public Vector3 direction; 
 
     [HideInInspector] public bool isPredator;
     [HideInInspector] public bool isLightCollected;
@@ -30,6 +34,7 @@ public class Player : MonoBehaviour {
     private float timer;
 
 
+
     void Start() {
         rigb = GetComponent<Rigidbody>();
         
@@ -40,7 +45,6 @@ public class Player : MonoBehaviour {
         healthText.text = "Health : " + health;
         isInvisible = false;
 
-
         PLAYER = gameObject;
         LIGHT = lightObject;
 
@@ -49,6 +53,12 @@ public class Player : MonoBehaviour {
 
     void Update() {
         
+        //Mouse orientation
+        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = worldMousePos - transform.position;
+        float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg; 
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+      
         //WASD Movement
         if (Input.GetKey(KeyCode.W))
             rigb.AddForce(0, 0, pSpeed, ForceMode.VelocityChange);
@@ -87,13 +97,13 @@ public class Player : MonoBehaviour {
 
     void ActivateLight() {
         isLightCollected = false;
-        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = worldMousePos - transform.position;
-
-        direction.y = 0.0f;
+      
+        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = worldMousePos - transform.position; 
+        direction.y = 0f; 
         direction.Normalize();
-        lightObject.GetComponent<Rigidbody>().velocity = lightVelocity * direction;
 
+        lightObject.GetComponent<Rigidbody>().velocity = lightVelocity * direction;
         lightObject.transform.position = new Vector3(transform.position.x + direction.x * lightSpawnOffset, 0, transform.position.z + direction.z * lightSpawnOffset);
         lightObject.SetActive(true);
 
@@ -113,8 +123,6 @@ public class Player : MonoBehaviour {
     void PowerUpSpotlight() {
         spotLight = GetComponentInChildren<Light>();
         spotLight.enabled = !spotLight.enabled;
-        
-        Debug.Log("Jeppi");
     }
 
     void PowerUpInvisibility() {

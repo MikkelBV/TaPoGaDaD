@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     public Monster monster;
     public GameObject Screen;
     public Text healthText;
+    public Light spotLight; 
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
     public float lightSpawnOffset = 1f;
@@ -31,7 +32,8 @@ public class Player : MonoBehaviour {
 
     void Start() {
         rigb = GetComponent<Rigidbody>();
-
+        
+        GetComponentInChildren<Light>().enabled = false;
         lightObject.SetActive(false);
         isLightCollected = true;
         health = 3;
@@ -46,6 +48,7 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
+        
         //WASD Movement
         if (Input.GetKey(KeyCode.W))
             rigb.AddForce(0, 0, pSpeed, ForceMode.VelocityChange);
@@ -108,6 +111,9 @@ public class Player : MonoBehaviour {
     }
 
     void PowerUpSpotlight() {
+        spotLight = GetComponentInChildren<Light>();
+        spotLight.enabled = !spotLight.enabled;
+        
         Debug.Log("Jeppi");
     }
 

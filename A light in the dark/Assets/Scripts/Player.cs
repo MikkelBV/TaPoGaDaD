@@ -54,8 +54,7 @@ public class Player : MonoBehaviour {
     void Update() {
         
         //Mouse orientation
-        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = worldMousePos - transform.position;
+        direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg; 
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
       

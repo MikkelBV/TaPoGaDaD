@@ -57,16 +57,16 @@ public class Player : MonoBehaviour {
         direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg; 
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
-      
+        float nPSpeed = pSpeed * Time.deltaTime;
         //WASD Movement
         if (Input.GetKey(KeyCode.W))
-            rigb.AddForce(0, 0, pSpeed, ForceMode.VelocityChange);
+            rigb.AddForce(0, 0, nPSpeed, ForceMode.VelocityChange);
         if (Input.GetKey(KeyCode.A))
-            rigb.AddForce(-pSpeed, 0, 0, ForceMode.VelocityChange);
+            rigb.AddForce(-nPSpeed, 0, 0, ForceMode.VelocityChange);
         if (Input.GetKey(KeyCode.S))
-            rigb.AddForce(0, 0, -pSpeed, ForceMode.VelocityChange);
+            rigb.AddForce(0, 0, -nPSpeed, ForceMode.VelocityChange);
         if (Input.GetKey(KeyCode.D))
-            rigb.AddForce(pSpeed, 0, 0, ForceMode.VelocityChange);
+            rigb.AddForce(nPSpeed, 0, 0, ForceMode.VelocityChange);
 
         if (Input.GetMouseButtonDown(1) && isLightCollected) {
 

@@ -11,15 +11,18 @@ public class Monster : MonoBehaviour {
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
-        agent.autoBraking = true;
         health = 3;
     }
 
     void Update() {
         if (Player.LIGHT.activeSelf && !player.isPredator ) {
+            agent.speed = 1.5f;
             agent.SetDestination(Player.LIGHT.transform.position);
         } else if (!player.isInvisible) {
+            agent.speed = 3f;
             agent.SetDestination(Player.PLAYER.transform.position);
+        } else {
+            agent.SetDestination(transform.position);
         }
     }
 

@@ -76,12 +76,6 @@ public class Player : MonoBehaviour {
             lightObject.GetComponent<Light>().color = new Color(Random.value, Random.value, Random.value);
         }
 
-        if (isLightCollected == true){
-            monster.agent.speed = 0.7f;
-        } else {
-            monster.agent.speed = 1.5f;
-        }
-
         if (isInvisible){
             timer -= Time.deltaTime;
             Debug.Log(timer);

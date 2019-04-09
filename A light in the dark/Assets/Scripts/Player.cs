@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
     private float modifierZ;
     private float modifierX;
 
-    private float timer;
+    private float timerInvis;
 
 
 
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             transform.position += transform.right * speed;
 
+
         if (Input.GetMouseButtonDown(1) && isLightCollected) {
             ActivateLight();
         }
@@ -77,9 +78,9 @@ public class Player : MonoBehaviour {
         }
 
         if (isInvisible){
-            timer -= Time.deltaTime;
-            Debug.Log(timer);
-            if (timer < 0) isInvisible = false;
+            timerInvis -= Time.deltaTime;
+            Debug.Log(timerInvis);
+            if (timerInvis < 0) isInvisible = false;
         }
     }
 
@@ -119,7 +120,7 @@ public class Player : MonoBehaviour {
 
     void PowerUpInvisibility() {
         isInvisible = true;
-        timer = 10.0f;
+        timerInvis = 10.0f;
         Debug.Log("Ismail");
     }
 

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
     [HideInInspector] public bool isPredator;
     [HideInInspector] public bool isLightCollected;
     [HideInInspector] public bool isInvisible;
+    [HideInInspector] public bool invisibilityReady = false;
 
     private Transform waypoint;
     private int health;
@@ -90,6 +91,12 @@ public class Player : MonoBehaviour {
             //Debug.Log(timerInvis);
             if (timerInvis < 0) isInvisible = false;
         }
+
+        if (invisibilityReady == true && Input.GetKey(KeyCode.R)) {
+            isInvisible = true;
+            timerInvis = 10.0f;
+            Debug.Log("Ismail");
+        }
     }
 
     float getMouseDist(Vector3 position){
@@ -126,12 +133,6 @@ public class Player : MonoBehaviour {
         spotLight.enabled = !spotLight.enabled;
     }
 
-    void PowerUpInvisibility() {
-        isInvisible = true;
-        timerInvis = 10.0f;
-        Debug.Log("Ismail");
-    }
-
     void PowerUpExtraLight() {
         Debug.Log("Somin");
     }
@@ -142,7 +143,7 @@ public class Player : MonoBehaviour {
                 PowerUpSpotlight();
                 break;
             case PowerUpType.Invisibility:
-                PowerUpInvisibility();
+                invisibilityReady = true;
                 break;
             case PowerUpType.ExtraLight:
                 PowerUpExtraLight();

@@ -35,7 +35,10 @@ public class Player : MonoBehaviour {
     private float timerInvis;
     [HideInInspector] public float timerLight;
     private bool canShoot;
+    private int keysCollected;
 
+    public GameObject door;
+    public GameObject Light;
 
 
     void Start() {
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour {
         canShoot = true;
         PLAYER = gameObject;
         LIGHT = lightObject;
+        keysCollected = 0;
 
         Screen.SetActive(false);
     }
@@ -137,6 +141,10 @@ public class Player : MonoBehaviour {
         Debug.Log("Somin");
     }
 
+    void PowerUpKey(){
+        keysCollected += 1;
+        Debug.Log("Picked up a key. Total: " + keysCollected);
+    }
     void OnPowerUp(PowerUpType type) {
         switch(type) {
             case PowerUpType.Spotlight:
@@ -147,6 +155,9 @@ public class Player : MonoBehaviour {
                 break;
             case PowerUpType.ExtraLight:
                 PowerUpExtraLight();
+                break;
+            case PowerUpType.Key:
+                //function
                 break;
         }
     }

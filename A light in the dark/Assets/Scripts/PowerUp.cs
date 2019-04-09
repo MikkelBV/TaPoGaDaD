@@ -18,5 +18,6 @@ public class PowerUp : MonoBehaviour
 public enum PowerUpType {
     Spotlight,
     Invisibility,
-    ExtraLight
+    ExtraLight,
+    Key
 }

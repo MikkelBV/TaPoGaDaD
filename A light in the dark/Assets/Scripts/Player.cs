@@ -32,6 +32,8 @@ public class Player : MonoBehaviour {
     private float modifierX;
 
     private float timerInvis;
+    [HideInInspector] public float timerLight;
+    private bool canShoot;
 
 
 
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour {
         health = 3;
         healthText.text = "Health : " + health;
         isInvisible = false;
-
+        canShoot = true;
         PLAYER = gameObject;
         LIGHT = lightObject;
 
@@ -68,9 +70,15 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             transform.position += transform.right * speed;
 
+        if (Input.GetMouseButtonDown(1) && isLightCollected && canShoot) {
+                ActivateLight();
+                timerLight = 5.0f;
+        }
 
-        if (Input.GetMouseButtonDown(1) && isLightCollected) {
-            ActivateLight();
+        if (!canShoot){
+            timerLight -= Time.deltaTime;
+            Debug.Log(timerLight);
+            if (timerLight < 0) canShoot = true;
         }
 
         if (isPredator){
@@ -79,7 +87,7 @@ public class Player : MonoBehaviour {
 
         if (isInvisible){
             timerInvis -= Time.deltaTime;
-            Debug.Log(timerInvis);
+            //Debug.Log(timerInvis);
             if (timerInvis < 0) isInvisible = false;
         }
     }
@@ -143,6 +151,7 @@ public class Player : MonoBehaviour {
     }
 
     public void ResetLight() {
+        canShoot = false;
         lightObject.SetActive(false);
         isLightCollected = true;
     }

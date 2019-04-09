@@ -86,16 +86,21 @@ public class Player : MonoBehaviour {
             lightObject.GetComponent<Light>().color = new Color(Random.value, Random.value, Random.value);
         }
 
-        if (isInvisible){
-            timerInvis -= Time.deltaTime;
-            //Debug.Log(timerInvis);
-            if (timerInvis < 0) isInvisible = false;
-        }
-
         if (invisibilityReady == true && Input.GetKey(KeyCode.R)) {
             isInvisible = true;
             timerInvis = 10.0f;
+            GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
             Debug.Log("Ismail");
+        }
+        
+        if (isInvisible){
+            timerInvis -= Time.deltaTime;
+            //Debug.Log(timerInvis);
+            if (timerInvis < 0){
+                isInvisible = false;
+                invisibilityReady = false;
+                GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0f, 1f, 0f, 1f));
+            }
         }
     }
 

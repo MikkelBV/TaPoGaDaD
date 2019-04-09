@@ -38,11 +38,16 @@ public class Player : MonoBehaviour {
     private int keysCollected;
 
     public GameObject door;
-    public GameObject Light;
+    private Light doorLight;
+    private ParticleSystem doorParticle;
+    private BoxCollider doorCollider;
 
 
     void Start() {
         rigb = GetComponent<Rigidbody>();
+        doorLight = door.GetComponent<Light>();
+        doorParticle = door.GetComponent<ParticleSystem>();
+        doorCollider = door.GetComponent<BoxCollider>();
 
         // GetComponentInChildren<Light>().enabled = false;
         lightObject.SetActive(false);
@@ -106,6 +111,7 @@ public class Player : MonoBehaviour {
                 GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0f, 1f, 0f, 1f));
             }
         }
+
     }
 
     float getMouseDist(Vector3 position){
@@ -149,6 +155,13 @@ public class Player : MonoBehaviour {
     void PowerUpKey(){
         keysCollected += 1;
         Debug.Log("Picked up a key. Total: " + keysCollected);
+
+        if (keysCollected == 3){
+            doorLight.color = Color.green;
+            var doorParticleSettings = doorParticle.main;
+            doorParticleSettings.startColor = new Color(0,1,0,1);
+            doorCollider.enabled = false;
+        }
     }
     void OnPowerUp(PowerUpType type) {
         switch(type) {
@@ -162,7 +175,7 @@ public class Player : MonoBehaviour {
                 PowerUpExtraLight();
                 break;
             case PowerUpType.Key:
-                //function
+                PowerUpKey();
                 break;
         }
     }

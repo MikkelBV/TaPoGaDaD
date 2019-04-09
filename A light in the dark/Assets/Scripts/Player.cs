@@ -11,14 +11,14 @@ public class Player : MonoBehaviour {
     public Monster monster;
     public GameObject Screen;
     public Text healthText;
-    public Light spotLight; 
+    public Light spotLight;
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
     public float lightSpawnOffset = 1f;
-    public float lookSpeed = 5f; 
+    public float lookSpeed = 5f;
 
     public Vector3 worldMousePos;
-    public Vector3 direction; 
+    public Vector3 direction;
 
     [HideInInspector] public bool isPredator;
     [HideInInspector] public bool isLightCollected;
@@ -37,8 +37,8 @@ public class Player : MonoBehaviour {
 
     void Start() {
         rigb = GetComponent<Rigidbody>();
-        
-        GetComponentInChildren<Light>().enabled = false;
+
+        // GetComponentInChildren<Light>().enabled = false;
         lightObject.SetActive(false);
         isLightCollected = true;
         health = 3;
@@ -52,24 +52,23 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        
         //Mouse orientation
         direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg; 
+        float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
-        float nPSpeed = pSpeed * Time.deltaTime;
+
         //WASD Movement
+        float speed = pSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.W))
-            rigb.AddForce(0, 0, nPSpeed, ForceMode.VelocityChange);
-        if (Input.GetKey(KeyCode.A))
-            rigb.AddForce(-nPSpeed, 0, 0, ForceMode.VelocityChange);
+            transform.position += transform.forward * speed;
         if (Input.GetKey(KeyCode.S))
-            rigb.AddForce(0, 0, -nPSpeed, ForceMode.VelocityChange);
+            transform.position += -1 * transform.forward * speed;
+        if (Input.GetKey(KeyCode.A))
+            transform.position += -1 * transform.right * speed;
         if (Input.GetKey(KeyCode.D))
-            rigb.AddForce(nPSpeed, 0, 0, ForceMode.VelocityChange);
+            transform.position += transform.right * speed;
 
         if (Input.GetMouseButtonDown(1) && isLightCollected) {
-
             ActivateLight();
         }
 
@@ -96,10 +95,10 @@ public class Player : MonoBehaviour {
 
     void ActivateLight() {
         isLightCollected = false;
-      
+
         worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = worldMousePos - transform.position; 
-        direction.y = 0f; 
+        direction = worldMousePos - transform.position;
+        direction.y = 0f;
         direction.Normalize();
 
         lightObject.GetComponent<Rigidbody>().velocity = lightVelocity * direction;

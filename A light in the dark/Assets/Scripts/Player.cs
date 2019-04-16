@@ -34,13 +34,13 @@ public class Player : MonoBehaviour {
 
     private float timerInvis;
     [HideInInspector] public float timerLight;
-    private bool canShoot;
     private int keysCollected;
 
     public GameObject door;
     private Light doorLight;
     private ParticleSystem doorParticle;
     private BoxCollider doorCollider;
+    private NavMeshAgent lightAgent;
 
 
     void Start() {
@@ -49,18 +49,17 @@ public class Player : MonoBehaviour {
         doorParticle = door.GetComponent<ParticleSystem>();
         doorCollider = door.GetComponent<BoxCollider>();
 
-        // GetComponentInChildren<Light>().enabled = false;
         lightObject.SetActive(false);
         isLightCollected = true;
         health = 3;
         healthText.text = "Health : " + health;
         isInvisible = false;
-        canShoot = true;
         PLAYER = gameObject;
         LIGHT = lightObject;
         keysCollected = 0;
 
         Screen.SetActive(false);
+        lightAgent = lightObject.GetComponent<NavMeshAgent>();
     }
 
     void Update() {
@@ -80,15 +79,11 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             transform.position += transform.right * speed;
 
-        if (Input.GetMouseButtonDown(1) && isLightCollected && canShoot) {
-                ActivateLight();
-                timerLight = 5.0f;
-        }
-
-        if (!canShoot){
-            timerLight -= Time.deltaTime;
-            Debug.Log(timerLight);
-            if (timerLight < 0) canShoot = true;
+        if (Input.GetMouseButtonDown(0) && isLightCollected) {
+            ActivateLight();
+            timerLight = 5.0f;
+        } else if (Input.GetMouseButtonDown(1)) {
+            CollectLight();
         }
 
         if (isPredator){
@@ -101,10 +96,9 @@ public class Player : MonoBehaviour {
             GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
             Debug.Log("Ismail");
         }
-        
+
         if (isInvisible){
             timerInvis -= Time.deltaTime;
-            //Debug.Log(timerInvis);
             if (timerInvis < 0){
                 isInvisible = false;
                 invisibilityReady = false;
@@ -112,12 +106,18 @@ public class Player : MonoBehaviour {
             }
         }
 
+        if (lightAgent.enabled) {
+            lightAgent.SetDestination(transform.position);
+        }
     }
 
     float getMouseDist(Vector3 position){
         return Mathf.Abs(transform.position.x - position.x);
     }
 
+    void CollectLight() {
+        lightAgent.enabled = true;
+    }
     void ActivateLight() {
         isLightCollected = false;
 
@@ -181,7 +181,7 @@ public class Player : MonoBehaviour {
     }
 
     public void ResetLight() {
-        canShoot = false;
+        lightObject.GetComponent<NavMeshAgent>().enabled = false;
         lightObject.SetActive(false);
         isLightCollected = true;
     }

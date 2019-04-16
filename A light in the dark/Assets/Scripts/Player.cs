@@ -60,6 +60,7 @@ public class Player : MonoBehaviour {
 
         Screen.SetActive(false);
         lightAgent = lightObject.GetComponent<NavMeshAgent>();
+        lightAgent.enabled = false;
     }
 
     void Update() {

@@ -12,32 +12,28 @@ public class Monster : MonoBehaviour
 
     public Transform[] points;
     private int destPoint;
+    private bool isPlayerTargeted;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         health = 3;
+        isPlayerTargeted = false;
 
         GoToNextPoint();
     }
 
     void Update()
     {
-
-        if (!agent.pathPending && agent.remainingDistance <0.5f){
+        if (isPlayerTargeted) {
+            if (Vector3.Distance(transform.position, player.transform.position) > 3.0f) {
+                isPlayerTargeted = false;
+            } else {
+                agent.SetDestination(player.transform.position);
+            }
+        } else if (!agent.pathPending && agent.remainingDistance < 0.5f){
             GoToNextPoint();
         }
-        /*
-        if (Player.LIGHT.activeSelf && !player.isPredator ) {
-            agent.speed = 1.5f;
-            agent.SetDestination(Player.LIGHT.transform.position);
-        } else if (!player.isInvisible) {
-            agent.speed = 1.5f;
-            agent.SetDestination(Player.PLAYER.transform.position);
-        } else {
-            agent.SetDestination(transform.position);
-        }
-        */
     }
 
     public void GoToNextPoint()
@@ -52,22 +48,9 @@ public class Monster : MonoBehaviour
         destPoint = (destPoint + 1) % points.Length;
     }
 
-    //set light attributes on monster collision
-    /*
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Light1" && !player.isPredator)
-        {
-            health += 3;
-            player.ResetLight();
-        }
-        else if (other.gameObject.tag == "Light1" && player.isPredator)
-        {
-            health--;
-            other.gameObject.gameObject.SetActive(false);
-            Debug.Log(health);
-            Debug.Break();
+    public void OnChildTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Player") {
+            isPlayerTargeted = true;
         }
     }
-    */
 }

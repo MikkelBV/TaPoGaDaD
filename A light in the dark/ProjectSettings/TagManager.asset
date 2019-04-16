@@ -10,6 +10,7 @@ TagManager:
   - Light1
   - Weapon
   - PowerUp
+  - PatrolCollider
   layers:
   - Default
   - TransparentFX

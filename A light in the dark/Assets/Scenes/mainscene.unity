@@ -1258,7 +1258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314331054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.29, y: 0.30999994, z: 58.79}
+  m_LocalPosition: {x: 0.5, y: 0.30999994, z: 34.1}
   m_LocalScale: {x: 0.56315, y: 0.56315, z: 0.56315}
   m_Children:
   - {fileID: 625786082}
@@ -5213,7 +5213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206060695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.92, y: 0.37, z: 48.08}
+  m_LocalPosition: {x: 17.04, y: 0.37, z: 48.02}
   m_LocalScale: {x: 1.7298, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6078,6 +6078,7 @@ GameObject:
   - component: {fileID: 1468303540}
   - component: {fileID: 1468303542}
   - component: {fileID: 1468303543}
+  - component: {fileID: 1468303544}
   m_Layer: 0
   m_Name: Light
   m_TagString: Light1
@@ -6168,6 +6169,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!195 &1468303544
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468303539}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1468710044
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,9 @@ public class Monster : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerTargeted) {
+        if (Player.LIGHT.activeSelf && !player.isPredator) {
+            agent.SetDestination(Player.LIGHT.transform.position);
+        } else if (isPlayerTargeted && !player.isInvisible) {
             if (Vector3.Distance(transform.position, player.transform.position) > 3.0f) {
                 isPlayerTargeted = false;
             } else {
@@ -48,7 +50,16 @@ public class Monster : MonoBehaviour
         destPoint = (destPoint + 1) % points.Length;
     }
 
+    private void OnTriggerEnter(Collider other) {
+
+        if (other.gameObject.tag == "Light1" && player.isPredator) {
+            Debug.Log("OnTriggerEnter");
+            Debug.Break();
+        }
+    }
+
     public void OnChildTriggerEnter(Collider other) {
+        Debug.Log("onChildTriggerEnter");
         if (other.gameObject.tag == "Player") {
             isPlayerTargeted = true;
         }

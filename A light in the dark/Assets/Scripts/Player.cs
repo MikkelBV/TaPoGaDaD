@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
     public static GameObject PLAYER, LIGHT;
     public GameObject lightObject;
     public GameObject weapon;
     public Monster monster;
     public GameObject Screen;
     public Text healthText;
+    public GameObject splashCanvas;
     public Light spotLight;
     public float lightVelocity = 10f;
     public float pSpeed = 1f;
@@ -42,8 +44,12 @@ public class Player : MonoBehaviour {
     private BoxCollider doorCollider;
     private NavMeshAgent lightAgent;
 
+    private float splashTimer;
+    private bool canMove;
 
-    void Start() {
+
+    void Start()
+    {
         rigb = GetComponent<Rigidbody>();
         doorLight = door.GetComponent<Light>();
         doorParticle = door.GetComponent<ParticleSystem>();
@@ -61,65 +67,94 @@ public class Player : MonoBehaviour {
         Screen.SetActive(false);
         lightAgent = lightObject.GetComponent<NavMeshAgent>();
         lightAgent.enabled = false;
+
+        canMove = true;
+        splashTimer = 3f;
+        //Cursor.visible = false;
     }
 
-    void Update() {
+    void Update()
+    {
+
+        splashTimer -= Time.deltaTime;
+        if (splashTimer < 0)
+        {
+            splashCanvas.SetActive(false);
+        }
         //Mouse orientation
         direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        float angle = Mathf.Atan2(direction.x, direction. y) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
 
         //WASD Movement
         float speed = pSpeed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.W))
-            transform.position += transform.forward * speed;
-        if (Input.GetKey(KeyCode.S))
-            transform.position += -1 * transform.forward * speed;
-        if (Input.GetKey(KeyCode.A))
-            transform.position += -1 * transform.right * speed;
-        if (Input.GetKey(KeyCode.D))
-            transform.position += transform.right * speed;
+        if (canMove)
+        {
+            if (Input.GetKey(KeyCode.W))
+                transform.position += transform.forward * speed;
+            if (Input.GetKey(KeyCode.S))
+                transform.position += -1 * transform.forward * speed;
+            if (Input.GetKey(KeyCode.A))
+                transform.position += -1 * transform.right * speed;
+            if (Input.GetKey(KeyCode.D))
+                transform.position += transform.right * speed;
+        }
+        if (Input.GetKey(KeyCode.Escape))
+            Application.LoadLevel(Application.loadedLevel);
 
-        if (Input.GetMouseButtonDown(0) && isLightCollected) {
+        if (Input.GetMouseButtonDown(0) && isLightCollected)
+        {
             ActivateLight();
             timerLight = 5.0f;
-        } else if (Input.GetMouseButtonDown(1)) {
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
             CollectLight();
         }
 
-        if (isPredator){
+        if (isPredator)
+        {
             lightObject.GetComponent<Light>().color = new Color(Random.value, Random.value, Random.value);
         }
 
-        if (invisibilityReady == true && Input.GetKey(KeyCode.R)) {
+        if (invisibilityReady == true && Input.GetKey(KeyCode.R))
+        {
             isInvisible = true;
             timerInvis = 10.0f;
-            GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
+            GetComponent<Renderer>().material.color = new Color(0.4f, 0.4f, 0.4f, 1f);
+            //GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
             Debug.Log("Ismail");
         }
 
-        if (isInvisible){
+        if (isInvisible)
+        {
             timerInvis -= Time.deltaTime;
-            if (timerInvis < 0){
+            if (timerInvis < 0)
+            {
                 isInvisible = false;
                 invisibilityReady = false;
-                GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0f, 1f, 0f, 1f));
+                GetComponent<Renderer>().material.color = new Color(0, 0.8f, 0, 1f);
+                //GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0f, 1f, 0f, 1f));
             }
         }
 
-        if (lightAgent.enabled) {
+        if (lightAgent.enabled)
+        {
             lightAgent.SetDestination(transform.position);
         }
     }
 
-    float getMouseDist(Vector3 position){
+    float getMouseDist(Vector3 position)
+    {
         return Mathf.Abs(transform.position.x - position.x);
     }
 
-    void CollectLight() {
+    void CollectLight()
+    {
         lightAgent.enabled = true;
     }
-    void ActivateLight() {
+    void ActivateLight()
+    {
         isLightCollected = false;
 
         worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -132,40 +167,48 @@ public class Player : MonoBehaviour {
         lightObject.SetActive(true);
 
         //set light attributes on activation
-        if(!isPredator){
+        if (!isPredator)
+        {
             lightObject.GetComponent<Light>().color = Color.white;
             lightObject.GetComponent<Light>().range = 150f;
             lightObject.GetComponent<Light>().intensity = 1.75f;
         }
-        else{
+        else
+        {
             lightObject.GetComponent<Light>().color = Color.green;
             lightObject.GetComponent<Light>().range = 100;
             lightObject.GetComponent<Light>().intensity = 3f;
         }
     }
 
-    void PowerUpSpotlight() {
+    void PowerUpSpotlight()
+    {
         spotLight = GetComponentInChildren<Light>();
         spotLight.enabled = !spotLight.enabled;
     }
 
-    void PowerUpExtraLight() {
+    void PowerUpExtraLight()
+    {
         Debug.Log("Somin");
     }
 
-    void PowerUpKey(){
+    void PowerUpKey()
+    {
         keysCollected += 1;
         Debug.Log("Picked up a key. Total: " + keysCollected);
 
-        if (keysCollected == 3){
+        if (keysCollected == 3)
+        {
             doorLight.color = Color.green;
             var doorParticleSettings = doorParticle.main;
-            doorParticleSettings.startColor = new Color(0,1,0,1);
+            doorParticleSettings.startColor = new Color(0, 1, 0, 1);
             doorCollider.enabled = false;
         }
     }
-    void OnPowerUp(PowerUpType type) {
-        switch(type) {
+    void OnPowerUp(PowerUpType type)
+    {
+        switch (type)
+        {
             case PowerUpType.Spotlight:
                 PowerUpSpotlight();
                 break;
@@ -181,33 +224,47 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void ResetLight() {
+    public void ResetLight()
+    {
         lightObject.GetComponent<NavMeshAgent>().enabled = false;
         lightObject.SetActive(false);
         isLightCollected = true;
     }
 
-    void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Weapon"){
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Weapon")
+        {
             isPredator = true;
             weapon.SetActive(false);
-        } else if (other.gameObject.tag == "Monster") {
+        }
+        else if (other.gameObject.tag == "Monster")
+        {
             TakeDamage(3);
-        } else if (other.gameObject.tag == "Light1") {
+        }
+        else if (other.gameObject.tag == "Light1")
+        {
             ResetLight();
-        } else if(other.gameObject.tag == "Trap"){
+        }
+        else if (other.gameObject.tag == "Trap")
+        {
             TakeDamage(1);
-        } else if (other.gameObject.tag == "PowerUp") {
+        }
+        else if (other.gameObject.tag == "PowerUp")
+        {
             OnPowerUp(other.gameObject.GetComponent<PowerUp>().type);
         }
     }
 
-    void TakeDamage(int damage) {
+    void TakeDamage(int damage)
+    {
         health -= damage;
         healthText.text = "Health : " + health;
 
-        if (health <= 0) {
-            enabled = false;
+        if (health <= 0)
+        {
+            //enabled = false;
+            canMove = false;
             Screen.SetActive(true);
         }
     }

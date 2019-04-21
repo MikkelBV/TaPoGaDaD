@@ -866,7 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightObject: {fileID: 1468303539}
   weapon: {fileID: 1407801722}
-  monster: {fileID: 0}
+  monster: {fileID: 5703288435737835033, guid: 0ce2f1f8f98e1e94384cec36119d125d, type: 3}
   Screen: {fileID: 285983274}
   healthText: {fileID: 2104923320}
   spotLight: {fileID: 0}
@@ -1113,7 +1113,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bitch U Dead
+  m_Text: GAME OVER
 --- !u!222 &438218995
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1549,6 +1549,10 @@ PrefabInstance:
     - target: {fileID: 100002, guid: 6fa678d8706bce04ba354fb4963b5f93, type: 3}
       propertyPath: m_Name
       value: Eye
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 6fa678d8706bce04ba354fb4963b5f93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6fa678d8706bce04ba354fb4963b5f93, type: 3}
       propertyPath: m_LocalPosition.x

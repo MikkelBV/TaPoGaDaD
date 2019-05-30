@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -47,7 +48,10 @@ public class Player : MonoBehaviour
     private float splashTimer;
     private bool canMove;
 
+    public GameObject DeathAudio;
+    private bool doorOpen;
 
+    public GameObject DoorBlock;
     void Start()
     {
         rigb = GetComponent<Rigidbody>();
@@ -63,6 +67,7 @@ public class Player : MonoBehaviour
         PLAYER = gameObject;
         LIGHT = lightObject;
         keysCollected = 0;
+        doorOpen = false;
 
         Screen.SetActive(false);
         lightAgent = lightObject.GetComponent<NavMeshAgent>();
@@ -91,13 +96,13 @@ public class Player : MonoBehaviour
         if (canMove)
         {
             if (Input.GetKey(KeyCode.W))
-                transform.position += transform.forward * speed;
+                transform.Translate(Vector3.forward * speed, Space.World);
             if (Input.GetKey(KeyCode.S))
-                transform.position += -1 * transform.forward * speed;
+                transform.Translate(Vector3.forward * -speed, Space.World);
             if (Input.GetKey(KeyCode.A))
-                transform.position += -1 * transform.right * speed;
+                transform.Translate(Vector3.right * -speed, Space.World);
             if (Input.GetKey(KeyCode.D))
-                transform.position += transform.right * speed;
+                transform.Translate(Vector3.right * speed, Space.World);
         }
         if (Input.GetKey(KeyCode.Escape))
             Application.LoadLevel(Application.loadedLevel);
@@ -202,7 +207,9 @@ public class Player : MonoBehaviour
             doorLight.color = Color.green;
             var doorParticleSettings = doorParticle.main;
             doorParticleSettings.startColor = new Color(0, 1, 0, 1);
-            doorCollider.enabled = false;
+            doorOpen = true;
+            DoorBlock.SetActive(false);
+            //doorCollider.enabled = false;
         }
     }
     void OnPowerUp(PowerUpType type)
@@ -254,6 +261,12 @@ public class Player : MonoBehaviour
         {
             OnPowerUp(other.gameObject.GetComponent<PowerUp>().type);
         }
+
+        else if (other.gameObject.tag == "Door"){
+            if (doorOpen){
+                SceneManager.LoadScene("winscreen", LoadSceneMode.Single);
+            }
+        }
     }
 
     void TakeDamage(int damage)
@@ -264,6 +277,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             //enabled = false;
+            DeathAudio.GetComponent<AudioSource>().Play();
             canMove = false;
             Screen.SetActive(true);
         }

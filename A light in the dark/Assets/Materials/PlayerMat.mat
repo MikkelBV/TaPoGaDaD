@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerMat
-  m_Shader: {fileID: 4800000, guid: df5bca006faed034faaaca8e93d35712, type: 3}
+  m_Shader: {fileID: 4800000, guid: c558f2bf9bce542489f3175cfaa50f9f, type: 3}
   m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0

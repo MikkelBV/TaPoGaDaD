@@ -11,6 +11,7 @@ TagManager:
   - Weapon
   - PowerUp
   - PatrolCollider
+  - Door
   layers:
   - Default
   - TransparentFX
